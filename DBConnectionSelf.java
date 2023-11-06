@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.momo.dto.Job;
 
 public class DBConnectionSelf {
 
@@ -16,6 +20,8 @@ public class DBConnectionSelf {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		
+		List<Job> list = new ArrayList<>();
 		/*
 		 * 1. 드라이버로딩
 		 * 		DB에 접근하기 위해 필요한 라이브러리가 있는지 확인
@@ -45,15 +51,18 @@ public class DBConnectionSelf {
 			
 			// 숫자를 입력시 1부터
 			// 숫자 또는 결과 집합의 컬럼명
-			System.out.println("JOB_CODE  JOB_NAME");
 			while (rs.next()) {
-				// 숫자를 입력시 1부터
-				// 숫자또는 결과집합의 컬럼명 
-				System.out.print(rs.getString("JOB_CODE") + "        ");
-				System.out.print(rs.getString("JOB_NAME"));
+				Job job = new Job();
+				job.setJob_Code(rs.getString(1));
+				job.setJob_Name(rs.getString(2));
+				System.out.print(rs.getString(1));
+				System.out.print(rs.getString(2));
 				System.out.println();
 				
+				list.add(job);
 			}		
+			System.out.println("========================");
+			System.out.println(list);
 						
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩실패");
